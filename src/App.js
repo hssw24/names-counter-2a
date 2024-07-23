@@ -48,7 +48,7 @@ const App = () => {
       {renderNames(name => name.number === 3, 'red', () => 0)}
       {renderNames(name => name.number === 2, 'yellow', () => 0)}
       {renderNames(name => name.number === 1, 'lightgreen', () => 0)}
-      {renderNames(name => name.number >= 0, 'white', (a, b) => a.number - b.number)}
+      {renderNames(name => name.number >= 0, 'white', (a, b) => a.name - b.name)}
     </div>
   );
 };
