@@ -1,64 +1,53 @@
 // src/App.js
 import React, { useEffect, useState } from 'react';
-import { db } from './firebase.js';
+import { collection, getDocs, updateDoc, doc } from 'firebase/firestore';
+import { db } from './firebaseConfig';
 import './App.css';
 
 const App = () => {
   const [names, setNames] = useState([]);
 
   useEffect(() => {
-    const fetchNames = async () => {
-      const namesSnapshot = await db.collection('names').get();
-      setNames(namesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+    const fetchData = async () => {
+      const querySnapshot = await getDocs(collection(db, 'names'));
+      const namesList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setNames(namesList);
     };
-    fetchNames();
+
+    fetchData();
   }, []);
 
-  const incrementCount = (id, currentCount) => {
-    db.collection('names').doc(id).update({ count: currentCount + 1 });
+  const incrementNumber = async (id, currentNumber) => {
+    const newNumber = currentNumber + 1;
+    const nameRef = doc(db, 'names', id);
+    await updateDoc(nameRef, { number: newNumber });
+    setNames(names.map(name => name.id === id ? { ...name, number: newNumber } : name));
   };
 
-  const renderNames = (filterFn, bgColor, sortFn) => {
-    return names
-      .filter(filterFn)
-      .sort(sortFn)
-      .map(name => (
-        <button
-          key={name.id}
-          style={{ backgroundColor: bgColor }}
-          onClick={() => incrementCount(name.id, name.count)}
-        >
-          {name.name} ({name.count})
-        </button>
-      ));
+  const renderNames = (filterCondition, color) => {
+    return (
+      <div style={{ backgroundColor: color, padding: '10px', marginBottom: '10px' }}>
+        {names.filter(filterCondition).map(name => (
+          <button
+            key={name.id}
+            onClick={() => incrementNumber(name.id, name.number)}
+            style={{ margin: '5px' }}
+          >
+            {name.name} ({name.number})
+          </button>
+        ))}
+      </div>
+    );
   };
 
   return (
-    <div className="App">
-      <div>
-        <h2>Alle Namen</h2>
-        {renderNames(() => true, 'white', (a, b) => a.name.localeCompare(b.name))}
-      </div>
-      <div>
-        <h2>Namen mit Zahl = 0</h2>
-        {renderNames(name => name.count === 0, 'lightgreen', (a, b) => a.name.localeCompare(b.name))}
-      </div>
-      <div>
-        <h2>Namen mit Zahl = 1</h2>
-        {renderNames(name => name.count === 1, 'lightgray', (a, b) => a.name.localeCompare(b.name))}
-      </div>
-      <div>
-        <h2>Namen mit Zahl = 2</h2>
-        {renderNames(name => name.count === 2, 'yellow', (a, b) => a.name.localeCompare(b.name))}
-      </div>
-      <div>
-        <h2>Namen mit Zahl = 3</h2>
-        {renderNames(name => name.count === 3, 'red', (a, b) => a.name.localeCompare(b.name))}
-      </div>
-      <div>
-        <h2>Namen mit Zahl >= 4</h2>
-        {renderNames(name => name.count >= 4, 'black', (a, b) => b.count - a.count)}
-      </div>
+    <div>
+      <h1>Names Counter</h1>
+      {renderNames(name => name.number === 1, 'lightgreen')}
+      {renderNames(name => name.number === 2, 'yellow')}
+      {renderNames(name => name.number === 3, 'red')}
+      {renderNames(name => name.number >= 4, 'black')}
+      {renderNames(name => name.number === 0, 'white')}
     </div>
   );
 };
