@@ -1,89 +1,66 @@
 // src/App.js
 import React, { useEffect, useState } from 'react';
-import { collection, getDocs, updateDoc, doc } from 'firebase/firestore';
-import { db } from './firebaseConfig';
+import { db } from './firebase';
+import './App.css';
 
 const App = () => {
   const [names, setNames] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const querySnapshot = await getDocs(collection(db, 'names'));
-      const namesList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setNames(namesList);
+    const fetchNames = async () => {
+      const namesSnapshot = await db.collection('names').get();
+      setNames(namesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
     };
-
-    fetchData();
+    fetchNames();
   }, []);
 
-  const incrementNumber = async (id, currentNumber) => {
-    const newNumber = currentNumber + 1;
-    const nameRef = doc(db, 'names', id);
-    await updateDoc(nameRef, { number: newNumber });
-    setNames(names.map(name => name.id === id ? { ...name, number: newNumber } : name));
+  const incrementCount = (id, currentCount) => {
+    db.collection('names').doc(id).update({ count: currentCount + 1 });
   };
 
-  const renderNames = (number, color) => {
-    return (
-      <div style={{ backgroundColor: color, padding: '10px', marginBottom: '10px' }}>
-        {names.filter(name => name.number === number).map(name => (
-          <button key={name.id} onClick={() => incrementNumber(name.id, name.number)}>
-            {name.name} ({name.number})
-          </button>
-        ))}
-      </div>
-    );
-  };
-
-  const renderNamesGreaterThanOrEqualTo = (number, color) => {
-    return (
-      <div style={{ backgroundColor: color, padding: '10px', marginBottom: '10px' }}>
-        {names.filter(name => name.number >= number).sort((a, b) => b.number - a.number).map(name => (
-          <button key={name.id} onClick={() => incrementNumber(name.id, name.number)}>
-            {name.name} ({name.number})
-          </button>
-        ))}
-      </div>
-    );
+  const renderNames = (filterFn, bgColor, sortFn) => {
+    return names
+      .filter(filterFn)
+      .sort(sortFn)
+      .map(name => (
+        <button
+          key={name.id}
+          style={{ backgroundColor: bgColor }}
+          onClick={() => incrementCount(name.id, name.count)}
+        >
+          {name.name} ({name.count})
+        </button>
+      ));
   };
 
   return (
-    <div>
-      <h1>Names Counter</h1>
-      {renderNames(1, 'lightgreen')}
-      {renderNames(2, 'yellow')}
-      {renderNames(3, 'red')}
-      {renderNamesGreaterThanOrEqualTo(4, 'black')}
+    <div className="App">
+      <div>
+        <h2>Alle Namen</h2>
+        {renderNames(() => true, 'white', (a, b) => a.name.localeCompare(b.name))}
+      </div>
+      <div>
+        <h2>Namen mit Zahl = 0</h2>
+        {renderNames(name => name.count === 0, 'lightgreen', (a, b) => a.name.localeCompare(b.name))}
+      </div>
+      <div>
+        <h2>Namen mit Zahl = 1</h2>
+        {renderNames(name => name.count === 1, 'lightgray', (a, b) => a.name.localeCompare(b.name))}
+      </div>
+      <div>
+        <h2>Namen mit Zahl = 2</h2>
+        {renderNames(name => name.count === 2, 'yellow', (a, b) => a.name.localeCompare(b.name))}
+      </div>
+      <div>
+        <h2>Namen mit Zahl = 3</h2>
+        {renderNames(name => name.count === 3, 'red', (a, b) => a.name.localeCompare(b.name))}
+      </div>
+      <div>
+        <h2>Namen mit Zahl >= 4</h2>
+        {renderNames(name => name.count >= 4, 'black', (a, b) => b.count - a.count)}
+      </div>
     </div>
   );
 };
 
 export default App;
-
-/*
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;
-*/

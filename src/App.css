@@ -1,3 +1,35 @@
+/* src/App.css */
+.App {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 20px;
+}
+
+.App div {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.App button {
+  display: block;
+  margin: 5px 0;
+  padding: 10px;
+  width: 100%;
+  color: #000;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.App button:hover {
+  opacity: 0.8;
+}
+
+
+/*
 .App {
   text-align: center;
 }
@@ -36,3 +68,4 @@
     transform: rotate(360deg);
   }
 }
+*/
