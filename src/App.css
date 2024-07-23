@@ -33,6 +33,7 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    width:150;
   }
   
   button:active {
@@ -54,4 +55,3 @@ body {
       width: 100%;
     }
   }
-  
