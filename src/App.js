@@ -24,12 +24,12 @@ const App = () => {
 
   const renderNames = (filterCondition, color) => {
     return (
-      <div style={{ backgroundColor: color, padding: '10px', marginBottom: '10px' }}>
+      <div style={{ backgroundColor: color, padding: '5px', marginBottom: '5px' }}>
         {names.filter(filterCondition).map(name => (
           <button
             key={name.id}
             onClick={() => incrementNumber(name.id, name.number)}
-            style={{ margin: '5px' }}
+            style={{ margin: '3px' }}
           >
             {name.name} ({name.number})
           </button>
@@ -40,12 +40,12 @@ const App = () => {
 
   return (
     <div>
-      <h1>Names Counter</h1>
-      {renderNames(name => name.number === 1, 'lightgreen')}
-      {renderNames(name => name.number === 2, 'yellow')}
-      {renderNames(name => name.number === 3, 'red')}
+      <h1>Ampel 2a</h1>
       {renderNames(name => name.number >= 4, 'black')}
-      {renderNames(name => name.number === 0, 'white')}
+      {renderNames(name => name.number === 3, 'red')}
+      {renderNames(name => name.number === 2, 'yellow')}
+      {renderNames(name => name.number === 1, 'lightgreen')}
+      {renderNames(name => name.number >= 0, 'white')}
     </div>
   );
 };
