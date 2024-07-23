@@ -1,6 +1,6 @@
 // src/App.js
 import React, { useEffect, useState } from 'react';
-import { db } from './firebase';
+import { db } from './firebase.js';
 import './App.css';
 
 const App = () => {
