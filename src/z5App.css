@@ -27,9 +27,8 @@ body {
   
   button {
     display: inline-block;
-    width: 100px;
-    height: 40px;
     margin: 5px;
+    padding: 10px 15px;
     font-size: 16px;
     border: none;
     border-radius: 5px;
@@ -46,8 +45,7 @@ body {
     }
   
     button {
-      width: 80px;
-      height: 35px;
+      padding: 8px 12px;
       font-size: 14px;
       margin: 3px;
     }
@@ -56,4 +54,3 @@ body {
       width: 100%;
     }
   }
-  
