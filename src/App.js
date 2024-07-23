@@ -42,12 +42,12 @@ const App = () => {
 
   return (
     <div>
-      <h1>Names Counter</h1>
-      {renderNames(name => name.number === 1, 'lightgreen')}
-      {renderNames(name => name.number === 2, 'yellow')}
-      {renderNames(name => name.number === 3, 'red')}
+      <h1>Ampel 2a</h1>
       {renderNames(name => name.number >= 4, 'black')}
-      {renderNames(name => name.number === 0, 'white')}
+      {renderNames(name => name.number === 3, 'red')}
+      {renderNames(name => name.number === 2, 'yellow')}
+      {renderNames(name => name.number === 1, 'lightgreen')}
+      {renderNames(name => name.number >= 0, 'white')}
     </div>
   );
 };
