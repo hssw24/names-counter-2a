@@ -25,11 +25,17 @@ h1 {
 }
 
 button {
-  padding: 5px 5px;
+  padding: 10px 10px;
   font-size: 20px;
-  border: none;
+  border: 1px;
   border-radius: 4px;
   cursor: pointer;
+/*
+border-color: green;
+border-width: 5px;
+border-style: solid;
+
+*/
 }
 
 button:hover {
