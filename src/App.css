@@ -42,7 +42,7 @@ body {
   
   @media (max-width: 600px) {
     .container {
-      padding: 5px;
+      padding: 15px;
     }
   
     button {
@@ -56,4 +56,3 @@ body {
       width: 100%;
     }
   }
-  
