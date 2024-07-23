@@ -1,6 +1,6 @@
 // src/App.js
 import React, { useEffect, useState } from 'react';
-import { collection, updateDoc, doc, onSnapshot } from 'firebase/firestore';
+import { collection, onSnapshot, updateDoc, doc } from 'firebase/firestore';
 import { db } from './firebaseConfig';
 import './App.css';
 
@@ -8,18 +8,27 @@ const App = () => {
   const [names, setNames] = useState([]);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, 'names'), (snapshot) => {
-      const namesList = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const fetchData = async () => {
+      const unsubscribe = onSnapshot(collection(db, 'names'), (snapshot) => {
+        const namesList = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+//      const querySnapshot = await getDocs(collection(db, 'names'));
+//      const namesList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       setNames(namesList);
     });
 
+
     return () => unsubscribe();  // Cleanup listener on unmount
   }, []);
+
+//    fetchData();
+//  }, []);
 
   const incrementNumber = async (id, currentNumber) => {
     const newNumber = currentNumber + 1;
     const nameRef = doc(db, 'names', id);
     await updateDoc(nameRef, { number: newNumber });
+//    setNames(names.map(name => name.id === id ? { ...name, number: newNumber } : name));
   };
 
   const renderNames = (filterCondition, color) => {
@@ -40,12 +49,12 @@ const App = () => {
 
   return (
     <div>
-      <h1>Names Counter</h1>
-      {renderNames(name => name.number === 1, 'lightgreen')}
-      {renderNames(name => name.number === 2, 'yellow')}
-      {renderNames(name => name.number === 3, 'red')}
+      <h1>Ampel 2a</h1>
       {renderNames(name => name.number >= 4, 'black')}
-      {renderNames(name => name.number === 0, 'white')}
+      {renderNames(name => name.number === 3, 'red')}
+      {renderNames(name => name.number === 2, 'yellow')}
+      {renderNames(name => name.number === 1, 'lightgreen')}
+      {renderNames(name => name.number >= 0, 'white')}
     </div>
   );
 };
