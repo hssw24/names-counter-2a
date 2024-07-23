@@ -1,3 +1,4 @@
+// src/App.js
 import React, { useEffect, useState } from 'react';
 import { collection, updateDoc, doc, onSnapshot } from 'firebase/firestore';
 import { db } from './firebaseConfig';
@@ -23,7 +24,7 @@ const App = () => {
 
   const renderNames = (filterCondition, color, sortFunction) => {
     return (
-      <div className="category" style={{ backgroundColor: color }}>
+      <div style={{ backgroundColor: color, padding: '5px', marginBottom: '5px' }}>
         {names
           .filter(filterCondition)
           .sort(sortFunction)
@@ -31,6 +32,7 @@ const App = () => {
             <button
               key={name.id}
               onClick={() => incrementNumber(name.id, name.number)}
+              style={{ margin: '3px' }}
             >
               {name.name} ({name.number})
             </button>
@@ -40,7 +42,7 @@ const App = () => {
   };
 
   return (
-    <div className="container">
+    <div>
       <h1>Ampel 2a</h1>
       {renderNames(name => name.number >= 4, 'black', (a, b) => b.number - a.number)}
       {renderNames(name => name.number === 3, 'red', () => 0)}

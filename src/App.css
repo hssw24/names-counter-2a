@@ -1,43 +1,57 @@
-/* src/App.css */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-div {
-  width: 98%;
-  max-width: 800px;
-  margin: 20px auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-}
-
-h1 {
-  text-align: center;
-  color: #333;
-}
-
-button {
-  padding: 10px 10px;
-  font-size: 20px;
-  border: 1px;
-  border-radius: 4px;
-  cursor: pointer;
-width: 150px;
-border-color: black;
-border-width: 1px;
-border-style: solid;
-
-
-}
-
-button:hover {
-  opacity: 0.9;
-}
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  h1 {
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  .category {
+    width: 90%;
+    max-width: 500px;
+    background-color: #f0f0f0;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
+  button {
+    display: inline-block;
+    margin: 5px;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:active {
+    transform: scale(0.98);
+  }
+  
+  @media (max-width: 600px) {
+    .container {
+      padding: 5px;
+    }
+  
+    button {
+      padding: 8px 12px;
+      font-size: 14px;
+      margin: 3px;
+    }
+  
+    .category {
+      width: 100%;
+    }
+  }
+  
