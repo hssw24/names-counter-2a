@@ -9,19 +9,26 @@ const App = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const querySnapshot = await getDocs(collection(db, 'names'));
-      const namesList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const unsubscribe = onSnapshot(collection(db, 'names'), (snapshot) => {
+        const namesList = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+//      const querySnapshot = await getDocs(collection(db, 'names'));
+//      const namesList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       setNames(namesList);
     };
 
-    fetchData();
+
+    return () => unsubscribe();  // Cleanup listener on unmount
   }, []);
+
+//    fetchData();
+//  }, []);
 
   const incrementNumber = async (id, currentNumber) => {
     const newNumber = currentNumber + 1;
     const nameRef = doc(db, 'names', id);
     await updateDoc(nameRef, { number: newNumber });
-    setNames(names.map(name => name.id === id ? { ...name, number: newNumber } : name));
+//    setNames(names.map(name => name.id === id ? { ...name, number: newNumber } : name));
   };
 
   const renderNames = (filterCondition, color) => {
