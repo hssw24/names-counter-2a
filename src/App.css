@@ -14,7 +14,6 @@ body {
     flex-direction: column;
     align-items: center;
     padding: 10px;
-    width: 150;
   }
   
   .category {
@@ -24,14 +23,13 @@ body {
     margin-bottom: 10px;
     padding: 10px;
     border-radius: 8px;
-    width: 150;
   }
   
   button {
     display: inline-block;
     margin: 5px;
     padding: 10px 15px;
-    font-size: 16px;
+    font-size: 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
