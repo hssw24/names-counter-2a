@@ -6,6 +6,7 @@ import { getFirestore, collection, getDocs, doc, updateDoc, setDoc } from 'fireb
 const firebaseConfig = {
   apiKey: "AIzaSyCjaAmC50fravoG8NOAlH6t13JSwwIkuc8",
   authDomain: "ampel2a.firebaseapp.com",
+  databaseURL: "https://ampel2a-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "ampel2a",
   storageBucket: "ampel2a.appspot.com",
   messagingSenderId: "866134153595",
